@@ -7,12 +7,16 @@ import { IBook, ISearchBooks } from '../types';
 interface SearchBooksState {
 	moreBooksList: IBook[];
 	moreBooksSearchValue: string;
+	getMoreBooksError: string;
+	isGetMoreBooksError: boolean;
 	isMoreBooksLoading: boolean;
 }
 
 const initialState: SearchBooksState = {
 	moreBooksList: [],
 	moreBooksSearchValue: '',
+	getMoreBooksError: '',
+	isGetMoreBooksError: false,
 	isMoreBooksLoading: false,
 };
 
@@ -71,9 +75,14 @@ const getMoreBooksSlice = createSlice({
 				localStorage.setItem('booksList', JSON.stringify(state.moreBooksList));
 			}
 		);
-		builder.addCase(getMoreBooks.rejected, (state: SearchBooksState) => {
-			state.isMoreBooksLoading = false;
-		});
+		builder.addCase(
+			getMoreBooks.rejected,
+			(state: SearchBooksState, { payload }) => {
+				state.isMoreBooksLoading = false;
+				state.isGetMoreBooksError = true;
+				state.getMoreBooksError = payload;
+			}
+		);
 	},
 });
 

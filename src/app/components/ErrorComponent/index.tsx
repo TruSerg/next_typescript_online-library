@@ -18,7 +18,7 @@ const ErrorComponent: FC<ErrorComponentProps> = ({ error }) => {
 				<Heading
 					tag='h2'
 					className={styles.errorWrapperTitleText}
-					text={`Error: ${error}!`}
+					text={`${error}!`}
 				/>
 			</div>
 

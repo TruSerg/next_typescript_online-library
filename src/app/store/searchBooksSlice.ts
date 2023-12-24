@@ -9,8 +9,8 @@ interface SearchBooksState {
 	volumeInfo: {};
 	booksList: IBook[];
 	totalBooksSearchedQuantity: number;
-	error: string;
-	isError: boolean;
+	SearchBooksError: string;
+	isSearchBooksError: boolean;
 	isSearchBooksLoading: boolean;
 }
 
@@ -19,8 +19,8 @@ const initialState: SearchBooksState = {
 	volumeInfo: {} as IVolumeInfo,
 	booksList: [],
 	totalBooksSearchedQuantity: 0,
-	error: '',
-	isError: false,
+	SearchBooksError: '',
+	isSearchBooksError: false,
 	isSearchBooksLoading: false,
 };
 
@@ -65,8 +65,8 @@ const searchBooksSlice = createSlice({
 			searchBooks.rejected,
 			(state: SearchBooksState, { payload }) => {
 				state.isSearchBooksLoading = false;
-				state.isError = true;
-				state.error = payload;
+				state.isSearchBooksError = true;
+				state.SearchBooksError = payload;
 			}
 		);
 	},

@@ -42,13 +42,18 @@ const HomePageLayout: FC = () => {
 		booksResponse,
 		booksList,
 		totalBooksSearchedQuantity,
-		error,
-		isError,
+		SearchBooksError,
+		isSearchBooksError,
 		isSearchBooksLoading,
 	} = useAppSelector(state => state.searchBooks);
 
-	const { moreBooksList, moreBooksSearchValue, isMoreBooksLoading } =
-		useAppSelector(state => state.getMoreBooks);
+	const {
+		moreBooksList,
+		moreBooksSearchValue,
+		getMoreBooksError,
+		isGetMoreBooksError,
+		isMoreBooksLoading,
+	} = useAppSelector(state => state.getMoreBooks);
 
 	const { inputValue, handleFormFieldChange, handleFormReset } = useForm('');
 
@@ -184,8 +189,8 @@ const HomePageLayout: FC = () => {
 						<Loader />
 					) : (
 						<>
-							{isError ? (
-								<ErrorComponent error={error} />
+							{isSearchBooksError ? (
+								<ErrorComponent error={SearchBooksError} />
 							) : (
 								<>
 									{isThereMoreBooksList ? (
@@ -223,16 +228,20 @@ const HomePageLayout: FC = () => {
 
 				{isGetMoreBooksButtonShow && (
 					<div className={styles.mainButtonArea}>
-						<CustomButton
-							className={styles.mainButtonAreaBtn}
-							handleClick={handleGetMoreBooks}
-						>
-							{isMoreBooksLoading ? (
-								<Loader className={styles.mainLoader} />
-							) : (
-								'Load more...'
-							)}
-						</CustomButton>
+						{isGetMoreBooksError ? (
+							<ErrorComponent error={getMoreBooksError} />
+						) : (
+							<CustomButton
+								className={styles.mainButtonAreaBtn}
+								handleClick={handleGetMoreBooks}
+							>
+								{isMoreBooksLoading ? (
+									<Loader className={styles.mainLoader} />
+								) : (
+									'Load more...'
+								)}
+							</CustomButton>
+						)}
 					</div>
 				)}
 			</Container>
