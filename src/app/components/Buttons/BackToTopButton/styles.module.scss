@@ -1,0 +1,17 @@
+.btn {
+	position: fixed;
+	right: 50px;
+	bottom: 100px;
+	width: 60px;
+	height: 60px;
+
+	&Arrow {
+		font-size: 50px !important;
+		color: #838383;
+		transition: all 0.3s ease-in-out !important;
+
+		&:hover {
+			color: #5e5e5e !important;
+		}
+	}
+}

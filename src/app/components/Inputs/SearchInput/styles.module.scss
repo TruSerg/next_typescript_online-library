@@ -1,0 +1,19 @@
+.input {
+	font-size: 20px !important;
+	height: 45px !important;
+	color: #000 !important;
+	background-color: #fff !important;
+	border: 1px solid rgba(255, 255, 255, 0.7) !important;
+	transition: all 0.3s ease-in-out !important;
+
+	&:focus-within::before {
+		border: 1px solid rgba(255, 255, 255, 1) !important;
+		--Input-focused: 0;
+		--Input-focusedHighlight: #838383;
+	}
+
+	&:hover {
+		border: 1px solid rgba(255, 255, 255, 1) !important;
+		background-color: #efefef !important;
+	}
+}

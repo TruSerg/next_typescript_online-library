@@ -1,0 +1,107 @@
+.main {
+	&Top {
+		padding: 20px 0;
+		background-image: url(./static/img/top-bg.jpg);
+		margin-bottom: 30px;
+		min-height: 400px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		&Title {
+			color: rgba(255, 255, 255, 0.8);
+			font-size: 48px;
+			font-weight: 600;
+			text-align: center;
+			margin-bottom: 30px;
+		}
+
+		&FormArea {
+			max-width: 650px;
+			margin: 0 auto;
+			margin-bottom: 40px;
+		}
+	}
+
+	&SelectArea {
+		display: flex;
+		align-items: center;
+		gap: 30px;
+		justify-content: center;
+
+		&Box {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			&Text {
+				font-size: 20px;
+				font-weight: 600;
+				color: rgba(255, 255, 255, 0.8);
+			}
+		}
+	}
+
+	&BooksBox {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 400px;
+		margin-bottom: 30px;
+		position: relative;
+
+		&Error {
+			color: #ed1c24;
+		}
+
+		&CardsArea {
+			&Title {
+				font-size: 22px !important;
+				font-weight: 600 !important;
+				color: rgba(0, 0, 0, 0.8) !important;
+				margin-bottom: 30px;
+				text-align: center;
+
+				&Results {
+					color: #000;
+				}
+			}
+
+			&Flex {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 20px;
+				justify-content: center;
+			}
+		}
+	}
+
+	&ButtonArea {
+		max-width: 350px;
+		width: 100%;
+		margin: 0 auto;
+		margin-bottom: 30px;
+
+		&Btn {
+			width: 100%;
+			height: 60px !important;
+			font-size: 20px !important;
+			color: #838383 !important;
+			border: 1px solid #838383;
+			background-color: transparent !important;
+			border-radius: 30px !important;
+			transition: all 0.3s ease-in-out;
+
+			&:hover {
+				color: #333f4d !important;
+				border: 1px solid #333f4d;
+			}
+		}
+	}
+
+	&Loader {
+		width: 30px !important;
+		height: 30px !important;
+		color: #37424e !important;
+	}
+}

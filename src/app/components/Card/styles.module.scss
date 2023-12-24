@@ -1,0 +1,47 @@
+.card {
+	background-color: #f1f1f1 !important;
+	border: #f1f1f1 !important;
+
+	&Img {
+		height: 250px !important;
+		margin: 0 auto !important;
+		margin-bottom: 20px !important;
+		margin-top: 40px !important;
+		-webkit-box-shadow: 21px 21px 25px -3px rgba(0, 0, 0, 0.48);
+		-moz-box-shadow: 21px 21px 25px -3px rgba(0, 0, 0, 0.48);
+		box-shadow: 21px 21px 25px -3px rgba(0, 0, 0, 0.48);
+	}
+
+	&Category {
+		margin-bottom: 10px !important;
+	}
+	&Title {
+		margin-bottom: 10px !important;
+	}
+
+	&Author {
+		display: flex !important;
+		flex-wrap: wrap;
+		gap: 5px;
+
+		&Text {
+			line-height: 1.1 !important;
+		}
+
+		&Text:not(:last-child):after {
+			content: ',' !important;
+		}
+	}
+
+	&Btn {
+		width: 100%;
+		font-size: 18px !important;
+		color: #fff !important;
+		background-color: #838383 !important;
+		transition: all 0.3s ease-in-out;
+
+		&:hover {
+			background-color: #5e5e5e !important;
+		}
+	}
+}

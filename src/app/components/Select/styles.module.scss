@@ -1,0 +1,12 @@
+.select {
+	font-size: 20px !important;
+	font-weight: 600 !important;
+	color: rgba(0, 0, 0, 0.6) !important;
+	height: 45px !important;
+	background-color: #fff !important;
+	transition: background-color 0.3s ease-in-out !important;
+
+	&:hover {
+		background-color: #efefef !important;
+	}
+}

@@ -1,0 +1,16 @@
+.errorWrapper {
+	display: flex;
+  flex-direction: column;
+  align-items: center;
+
+	&Title {
+		max-width: 600px;
+		border: 1px solid rgba(0, 0, 0, 1);
+		padding: 20px;
+		border-radius: 10px;
+
+		&Text {
+			color: #ed1c24;
+		}
+	}
+}
