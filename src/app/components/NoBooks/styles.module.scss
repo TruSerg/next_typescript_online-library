@@ -4,6 +4,13 @@
 
 .text {
 	font-size: 26px;
+	font-weight: 600;
 	color: rgba(0, 0, 0, 0.5);
-  text-align: center;
+	text-align: center;
+}
+
+@media (max-width: 445px) {
+	.text {
+		font-size: 22px;
+	}
 }

@@ -68,7 +68,7 @@ const CustomCard: FC<CardProps> = ({
 				</div>
 			</CardContent>
 			<CardActions buttonFlex='0 1 100%'>
-				<Link href={link}>
+				<Link className={styles.cardLink} href={link}>
 					<CustomButton className={styles.cardBtn}>Details</CustomButton>
 				</Link>
 			</CardActions>

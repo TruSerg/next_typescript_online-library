@@ -3,10 +3,6 @@
 		padding: 20px 0;
 		background-image: url(./static/img/top-bg.jpg);
 		margin-bottom: 30px;
-		min-height: 400px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
 
 		&Title {
 			color: rgba(255, 255, 255, 0.8);
@@ -16,28 +12,39 @@
 			margin-bottom: 30px;
 		}
 
-		&FormArea {
-			max-width: 650px;
-			margin: 0 auto;
-			margin-bottom: 40px;
-		}
-	}
-
-	&SelectArea {
-		display: flex;
-		align-items: center;
-		gap: 30px;
-		justify-content: center;
-
-		&Box {
+		&Form {
+			min-height: 400px;
 			display: flex;
 			align-items: center;
-			gap: 10px;
+			justify-content: center;
 
-			&Text {
-				font-size: 20px;
-				font-weight: 600;
-				color: rgba(255, 255, 255, 0.8);
+			&Area {
+				max-width: 750px;
+				width: 100%;
+
+				&Box {
+					max-width: 620px;
+					width: 100%;
+					margin-bottom: 40px;
+				}
+			}
+
+			&SelectArea {
+				display: flex;
+				align-items: center;
+				gap: 30px;
+
+				&Box {
+					display: flex;
+					align-items: center;
+					gap: 10px;
+
+					&Text {
+						font-size: 20px;
+						font-weight: 600;
+						color: rgba(255, 255, 255, 0.8);
+					}
+				}
 			}
 		}
 	}
@@ -103,5 +110,171 @@
 		width: 30px !important;
 		height: 30px !important;
 		color: #37424e !important;
+	}
+}
+
+@media (max-width: 960px) {
+	.main {
+		&Top {
+			margin-bottom: 20px;
+
+			&Title {
+				font-size: 42px;
+			}
+
+			&Form {
+				&Area {
+					max-width: 620px;
+
+					&Box {
+						margin-bottom: 30px;
+					}
+				}
+
+				&SelectArea {
+					justify-content: space-between;
+					gap: 20px;
+
+					&Box {
+						flex-direction: column;
+						align-items: flex-start;
+						gap: 10px;
+
+						&Text {
+							font-size: 18px;
+						}
+					}
+				}
+			}
+		}
+
+		&BooksBox {
+			margin-bottom: 20px;
+
+			&CardsArea {
+				&Title {
+					font-size: 20px !important;
+					margin-bottom: 20px;
+				}
+
+				&Flex {
+					gap: 20px;
+				}
+			}
+		}
+
+		&ButtonArea {
+			max-width: 300px;
+			margin-bottom: 20px;
+
+			&Btn {
+				height: 50px !important;
+				font-size: 18px !important;
+			}
+		}
+
+		&Loader {
+			width: 25px !important;
+			height: 25px !important;
+		}
+	}
+}
+
+@media (max-width: 731px) {
+	.main {
+		&Top {
+			&Title {
+				font-size: 38px;
+			}
+
+			&Form {
+				min-height: 300px;
+
+				&Area {
+					&Box {
+						margin-bottom: 30px;
+					}
+				}
+
+				&SelectArea {
+					&Box {
+						&Text {
+							font-size: 18px;
+						}
+					}
+				}
+			}
+		}
+
+		&BooksBox {
+			&CardsArea {
+				&Title {
+					font-size: 18px !important;
+				}
+
+				&Flex {
+					gap: 10px;
+				}
+			}
+		}
+
+		&ButtonArea {
+			max-width: 250px;
+
+			&Btn {
+				height: 45px !important;
+				font-size: 16px !important;
+			}
+		}
+
+		&Loader {
+			width: 20px !important;
+			height: 20px !important;
+		}
+	}
+}
+
+@media (max-width: 550px) {
+	.main {
+		&Top {
+			&Title {
+				font-size: 32px;
+			}
+
+			&Form {
+				min-height: 300px;
+
+				&Area {
+					&Box {
+						margin-bottom: 20px;
+					}
+				}
+
+				&SelectArea {
+					flex-direction: column;
+					align-items: flex-start;
+
+					&Box {
+						&Text {
+							font-size: 16px;
+						}
+					}
+				}
+			}
+		}
+
+		&ButtonArea {
+			max-width: 180px;
+
+			&Btn {
+				height: 38px !important;
+				font-size: 16px !important;
+			}
+		}
+
+		&Loader {
+			width: 18px !important;
+			height: 18px !important;
+		}
 	}
 }

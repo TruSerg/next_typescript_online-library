@@ -64,8 +64,6 @@ const HomePageLayout: FC = () => {
 		handleBooksSortChange,
 	} = useSelect();
 
-	console.log(booksResponse);
-
 	const isFormValid = inputValue.toLowerCase().length > 0;
 
 	const handleFormSubmit = useCallback(
@@ -146,39 +144,54 @@ const HomePageLayout: FC = () => {
 		<main className={styles.main}>
 			<div className={styles.mainTop}>
 				<Container>
-					<Heading className={styles.mainTopTitle} text='Search for books' />
-					<div className={styles.mainTopFormArea}>
-						<CustomForm handleSubmit={handleFormSubmit} id='myForm'>
-							<SearchInput
-								inputValue={inputValue}
-								handleChange={handleFormFieldChange}
+					<div className={styles.mainTopForm}>
+						<div className={styles.mainTopFormArea}>
+							<Heading
+								className={styles.mainTopTitle}
+								text='Search for books'
 							/>
+							<div className={styles.mainTopFormAreaBox}>
+								<CustomForm handleSubmit={handleFormSubmit} id='myForm'>
+									<SearchInput
+										inputValue={inputValue}
+										handleChange={handleFormFieldChange}
+									/>
 
-							<FormButton type='submit' form='myForm' disabled={!isFormValid}>
-								<SearchOutlined fontSize='inherit' />
-							</FormButton>
-						</CustomForm>
-					</div>
+									<FormButton
+										type='submit'
+										form='myForm'
+										disabled={!isFormValid}
+									>
+										<SearchOutlined fontSize='inherit' />
+									</FormButton>
+								</CustomForm>
+							</div>
 
-					<div className={styles.mainSelectArea}>
-						<div className={styles.mainSelectAreaBox}>
-							<p className={styles.mainSelectAreaBoxText}>Categories</p>
-							<CustomSelect
-								array={bookCategories}
-								value={booksCategoryValue}
-								defaultValue='all'
-								handleChange={handleBooksCategoryChange}
-							/>
-						</div>
+							<div className={styles.mainTopFormSelectArea}>
+								<div className={styles.mainTopFormSelectAreaBox}>
+									<p className={styles.mainTopFormSelectAreaBoxText}>
+										Categories
+									</p>
+									<CustomSelect
+										array={bookCategories}
+										value={booksCategoryValue}
+										defaultValue='all'
+										handleChange={handleBooksCategoryChange}
+									/>
+								</div>
 
-						<div className={styles.mainSelectAreaBox}>
-							<p className={styles.mainSelectAreaBoxText}>Sorting by</p>
-							<CustomSelect
-								array={booksSort}
-								value={booksSortValue}
-								defaultValue='relevance'
-								handleChange={handleBooksSortChange}
-							/>
+								<div className={styles.mainTopFormSelectAreaBox}>
+									<p className={styles.mainTopFormSelectAreaBoxText}>
+										Sorting by
+									</p>
+									<CustomSelect
+										array={booksSort}
+										value={booksSortValue}
+										defaultValue='relevance'
+										handleChange={handleBooksSortChange}
+									/>
+								</div>
+							</div>
 						</div>
 					</div>
 				</Container>

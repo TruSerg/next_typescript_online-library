@@ -1,11 +1,29 @@
 .footer {
 	padding: 30px 0 30px 0;
 	background-color: #353535;
-  margin-top: auto;
+	margin-top: auto;
 
 	&Text {
 		text-align: center;
 		color: #fff;
 		font-size: 20px;
+	}
+}
+
+@media (max-width: 768px) {
+	.footer {
+		&Text {
+			font-size: 18px;
+		}
+	}
+}
+
+@media (max-width: 550px) {
+	.footer {
+		padding: 25px 0 25px 0;
+
+		&Text {
+			font-size: 16px;
+		}
 	}
 }

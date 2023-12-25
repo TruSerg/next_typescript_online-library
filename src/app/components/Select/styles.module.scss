@@ -10,3 +10,24 @@
 		background-color: #efefef !important;
 	}
 }
+
+@media (max-width: 960px) {
+	.select {
+		font-size: 18px !important;
+		height: 40px !important;
+	}
+}
+
+@media (max-width: 445px) {
+	.select {
+		max-width: 200px;
+		font-size: 16px !important;
+		height: 35px !important;
+	}
+}
+
+@media (max-width: 371px) {
+	.select {
+		max-width: 160px;
+	}
+}

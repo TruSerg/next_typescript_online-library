@@ -51,9 +51,7 @@ const getMoreBooksSlice = createSlice({
 	initialState,
 	reducers: {
 		getBooksOfFirstRequest(state, { payload }) {
-			state.moreBooksList.push(...payload);
-
-			localStorage.setItem('booksList', JSON.stringify(state.moreBooksList));
+			state.moreBooksList = [...payload];
 		},
 		moreBooksListClearOfNewSearchRequest(state) {
 			state.moreBooksList = [];
@@ -71,8 +69,6 @@ const getMoreBooksSlice = createSlice({
 			(state: SearchBooksState, { payload }) => {
 				state.isMoreBooksLoading = false;
 				state.moreBooksList = [...state.moreBooksList, ...payload.items];
-
-				localStorage.setItem('booksList', JSON.stringify(state.moreBooksList));
 			}
 		);
 		builder.addCase(

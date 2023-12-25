@@ -8,7 +8,7 @@ const Footer: FC = () => {
 	return (
 		<footer className={styles.footer}>
 			<Container>
-				<p className={styles.footerText}>© 2023 made by Sergey Trukhan</p>
+				<p className={styles.footerText}>© 2024 made by Sergey Trukhan</p>
 			</Container>
 		</footer>
 	);
