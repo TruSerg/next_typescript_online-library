@@ -11,6 +11,8 @@ import Container from '@/app/components/Container';
 import NoImage from '../../static/img/no-image.jpg';
 
 import styles from './styles.module.scss';
+import Link from 'next/link';
+import DateComponent from '@/app/components/DateComponent';
 
 export const getBookDetails = async (id: string) => {
 	try {
@@ -47,13 +49,19 @@ const Details: FC<DetailsProps> = async ({ params: { id } }) => {
 
 	console.log(book);
 
-	const { volumeInfo } = book;
+	const { volumeInfo, accessInfo } = book;
 
 	const authorsList: string[] = volumeInfo.authors;
 	const largeBookImage = volumeInfo.imageLinks?.large;
 	const mediumBookImage = volumeInfo.imageLinks?.medium;
 	const smallBookImage = volumeInfo.imageLinks?.small;
 	const thumbnailBookImage = volumeInfo.imageLinks?.thumbnail;
+	const webReaderLink = accessInfo.webReaderLink;
+	const publisher = volumeInfo.publisher;
+	const publishedDate = volumeInfo.publishedDate;
+	const version = volumeInfo.contentVersion;
+	const language = volumeInfo.language;
+	const pageCount = volumeInfo.pageCount;
 
 	return (
 		<div className={styles.main}>
@@ -70,8 +78,10 @@ const Details: FC<DetailsProps> = async ({ params: { id } }) => {
 								thumbnailBookImage ||
 								NoImage
 							}
-							height={400}
+							sizes='100vw'
+							layout='responsive'
 							width={400}
+							height={400}
 							alt='book image'
 						/>
 					</div>
@@ -95,8 +105,25 @@ const Details: FC<DetailsProps> = async ({ params: { id } }) => {
 							))}
 						</div>
 
+						<span
+							className={styles.mainFlexRightVersion}
+						>{`v.${version} - ${language} - ${pageCount} pages`}</span>
+
 						<div className={styles.mainFlexRightDescription}>
-							{volumeInfo.description?.replace(/[<p>/<b><i><br>]/g, '')}
+							{volumeInfo.description || 'No description available!'}
+						</div>
+						<Link
+							className={styles.mainFlexRightLink}
+							href={webReaderLink}
+							rel='noopener noreferrer'
+							target='_blank'
+						>
+							Web reader
+						</Link>
+						<div className={styles.mainFlexRightPublishing}>
+							<span>{publisher}</span>
+
+							<DateComponent date={publishedDate} dateFormat={'D.MM.YYYY'} />
 						</div>
 					</div>
 				</div>

@@ -1,7 +1,8 @@
 .errorWrapper {
 	display: flex;
-  flex-direction: column;
-  align-items: center;
+	flex-direction: column;
+	align-items: center;
+	word-wrap: break-word;
 
 	&Title {
 		max-width: 600px;
@@ -11,6 +12,30 @@
 
 		&Text {
 			color: #ed1c24;
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.errorWrapper {
+		&Title {
+			padding: 15px;
+
+			&Text {
+				font-size: 22px;
+			}
+		}
+	}
+}
+
+@media (max-width: 445px) {
+	.errorWrapper {
+		&Title {
+			padding: 10px;
+
+			&Text {
+				font-size: 18px;
+			}
 		}
 	}
 }

@@ -18,7 +18,7 @@ import CustomSelect from './components/Select';
 import Loader from './components/Loader';
 import FormButton from './components/Buttons/FormButton';
 import BackToTopButton from './components/Buttons/BackToTopButton';
-import NoBooksComponent from './components/NoBooks';
+import NoBooksComponent from './components/NoBooksComponent';
 import ErrorComponent from './components/ErrorComponent';
 
 import { bookCategories, booksSort } from './mock';

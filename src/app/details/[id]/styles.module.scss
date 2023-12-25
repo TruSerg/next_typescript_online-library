@@ -2,6 +2,7 @@
 	padding: 30px 0 30px 0;
 
 	&Title {
+		font-size: 32px;
 		color: #445669;
 		margin-bottom: 30px;
 		text-align: center;
@@ -22,7 +23,6 @@
 
 			&Img {
 				max-width: 400px;
-				min-height: 600px;
 				-webkit-box-shadow: 21px 21px 25px -3px rgba(0, 0, 0, 0.48);
 				-moz-box-shadow: 21px 21px 25px -3px rgba(0, 0, 0, 0.48);
 				box-shadow: 21px 21px 25px -3px rgba(0, 0, 0, 0.48);
@@ -61,11 +61,44 @@
 				}
 			}
 
+			&Version {
+				display: inline-block;
+				font-size: 14px;
+				color: rgba(0, 0, 0, 0.5);
+				margin-bottom: 20px;
+			}
+
 			&Description {
 				font-size: 18px;
 				font-weight: 600;
 				padding: 20px;
 				border: 1px solid rgba(0, 0, 0, 0.1);
+				margin-bottom: 10px;
+			}
+
+			&Link {
+				padding: 10px 0;
+				display: inline-block;
+				font-size: 18px;
+				font-weight: 600;
+				text-decoration: underline;
+				color: rgba(0, 0, 0, 0.6);
+				transition: color 0.3s ease-in-out;
+				margin-bottom: 10px;
+
+				&:hover {
+					color: rgba(0, 0, 0, 0.8);
+				}
+			}
+
+			&Publishing {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 5px;
+				font-size: 16px;
+				color: rgba(0, 0, 0, 0.6);
+				text-align: center;
 			}
 		}
 	}
@@ -77,4 +110,130 @@
 	justify-content: center;
 	min-height: 80vh;
 	padding: 30px 0;
+}
+
+@media (max-width: 1180px) {
+	.main {
+		&Flex {
+			&Right {
+				padding: 0;
+
+				&Category {
+					margin-bottom: 20px;
+				}
+
+				&Title {
+					font-size: 22px;
+					margin-bottom: 15px;
+				}
+
+				&Author {
+					margin-bottom: 10px;
+				}
+
+				&Version {
+					margin-bottom: 10px;
+				}
+
+				&Description {
+					font-size: 16px;
+					padding: 15px;
+					margin-bottom: 5px;
+				}
+
+				&Link {
+					margin-bottom: 5px;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 960px) {
+	.main {
+		&Title {
+			font-size: 28px;
+		}
+
+		&Flex {
+			flex-direction: column;
+
+			&Left {
+				min-height: 400px;
+				width: 100%;
+
+				&Img {
+					max-width: 300px;
+				}
+			}
+
+			&Right {
+				width: 100%;
+			}
+		}
+	}
+}
+
+@media (max-width: 768px) {
+	.main {
+		&Title {
+			font-size: 26px;
+		}
+
+		&Flex {
+			&Left {
+				min-height: 300px;
+
+				&Img {
+					max-width: 200px;
+				}
+			}
+		}
+	}
+}
+
+@media (max-width: 445px) {
+	.main {
+		&Title {
+			font-size: 22px;
+			margin-bottom: 20px;
+		}
+
+		&Flex {
+			gap: 20px;
+
+			&Left {
+				padding: 20px 0;
+				min-height: 250px;
+
+				&Img {
+					max-width: 150px;
+				}
+			}
+
+			&Right {
+				&Title {
+					font-size: 18px;
+					margin-bottom: 10px;
+				}
+
+				&Category {
+					font-size: 16px;
+				}
+
+				&Author {
+					margin-bottom: 10px;
+				}
+
+				&Version {
+					margin-bottom: 10px;
+				}
+
+				&Description {
+					font-size: 15px;
+					padding: 15px;
+				}
+			}
+		}
+	}
 }
