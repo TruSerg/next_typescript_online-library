@@ -1,6 +1,6 @@
 import { useState, useCallback, ChangeEvent } from 'react';
 
-const useForm = (initialValue: any) => {
+const useForm = (initialValue: string) => {
 	const [inputValue, setInputValue] = useState(initialValue);
 
 	const handleFormFieldChange = useCallback(

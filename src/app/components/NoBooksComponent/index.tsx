@@ -10,7 +10,7 @@ const NoBooksComponent = () => (
 			className={styles.img}
 			src={NoBooksImage}
 			width={400}
-			height={300}
+			priority
 			alt='No books'
 		/>
 		<p className={styles.text}>Start searching for books!</p>

@@ -8,7 +8,7 @@ import ErrorImage from '../../static/img/error.jpg';
 import styles from './styles.module.scss';
 
 interface ErrorComponentProps {
-	error: string;
+	error: string | string[] | undefined;
 }
 
 const ErrorComponent: FC<ErrorComponentProps> = ({ error }) => {

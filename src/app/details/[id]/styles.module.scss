@@ -194,6 +194,8 @@
 
 @media (max-width: 445px) {
 	.main {
+		padding: 20px 0;
+
 		&Title {
 			font-size: 22px;
 			margin-bottom: 20px;
@@ -218,10 +220,11 @@
 				}
 
 				&Category {
-					font-size: 16px;
+					font-size: 14px;
 				}
 
 				&Author {
+					font-size: 16;
 					margin-bottom: 10px;
 				}
 
@@ -231,7 +234,8 @@
 
 				&Description {
 					font-size: 15px;
-					padding: 15px;
+					padding: 0;
+					border: none;
 				}
 			}
 		}

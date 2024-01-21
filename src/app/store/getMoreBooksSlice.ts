@@ -1,91 +1,54 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import api from '../http';
-
-import { IBook, ISearchBooks } from '../types';
+import { IBook } from '../interfaces/searchBooksDataInterfaces';
 
 interface SearchBooksState {
 	moreBooksList: IBook[];
-	moreBooksSearchValue: string;
-	getMoreBooksError: string;
-	isGetMoreBooksError: boolean;
-	isMoreBooksLoading: boolean;
+	moreBooksSearchValue: any;
+	searchedBooksQuantity: number;
+	startIndex: number;
+	maxResultsLimit: number;
 }
 
 const initialState: SearchBooksState = {
 	moreBooksList: [],
 	moreBooksSearchValue: '',
-	getMoreBooksError: '',
-	isGetMoreBooksError: false,
-	isMoreBooksLoading: false,
+	searchedBooksQuantity: 0,
+	startIndex: 0,
+	maxResultsLimit: 30,
 };
 
-export const getMoreBooks = createAsyncThunk(
-	'books/getBooks',
-	async (
-		[
-			moreBooksSearchValue,
-			category,
-			startIndex,
-			maxLimitResults,
-			sort,
-		]: ISearchBooks[],
-		{ rejectWithValue }
-	) => {
-		const categoryValue = `${category}` === 'all' ? '' : `+subject:${category}`;
-
-		try {
-			const response = await api.get(
-				`?q=${moreBooksSearchValue}${categoryValue}&startIndex=${startIndex}&maxResults=${maxLimitResults}&orderBy=${sort}`
-			);
-
-			return response.data;
-		} catch (error: any) {
-			return rejectWithValue(error.message);
-		}
-	}
-);
-
 const getMoreBooksSlice = createSlice({
-	name: 'categories',
+	name: 'moreBooks',
 	initialState,
 	reducers: {
-		getBooksOfFirstRequest(state, { payload }) {
-			state.moreBooksList = [...payload];
+		getMoreBooks(state, { payload }) {
+			if (payload) {
+				state.moreBooksList = [...state.moreBooksList, ...payload];
+			}
 		},
-		moreBooksListClearOfNewSearchRequest(state) {
-			state.moreBooksList = [];
+		increaseStartIndex(state) {
+			state.startIndex = state.startIndex + state.maxResultsLimit;
 		},
 		getMoreBooksSearchValue(state, { payload }) {
 			state.moreBooksSearchValue = payload;
 		},
-	},
-	extraReducers: builder => {
-		builder.addCase(getMoreBooks.pending, (state: SearchBooksState) => {
-			state.isMoreBooksLoading = true;
-		});
-		builder.addCase(
-			getMoreBooks.fulfilled,
-			(state: SearchBooksState, { payload }) => {
-				state.isMoreBooksLoading = false;
-				state.moreBooksList = [...state.moreBooksList, ...payload.items];
-			}
-		);
-		builder.addCase(
-			getMoreBooks.rejected,
-			(state: SearchBooksState, { payload }) => {
-				state.isMoreBooksLoading = false;
-				state.isGetMoreBooksError = true;
-				state.getMoreBooksError = payload;
-			}
-		);
+		getSearchedBooksQuantity(state, { payload }) {
+			state.searchedBooksQuantity = payload;
+		},
+		clearMoreBooksList(state) {
+			state.moreBooksList = [];
+			state.startIndex = 0;
+		},
 	},
 });
 
 export const {
-	getBooksOfFirstRequest,
-	moreBooksListClearOfNewSearchRequest,
+	getMoreBooks,
+	increaseStartIndex,
 	getMoreBooksSearchValue,
+	getSearchedBooksQuantity,
+	clearMoreBooksList,
 } = getMoreBooksSlice.actions;
 
 export default getMoreBooksSlice.reducer;

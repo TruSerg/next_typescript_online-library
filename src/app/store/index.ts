@@ -1,13 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import searchBooksReducer from './searchBooksSlice';
-import moreBooksReducer from './getMoreBooksSlice';
+import { googleBooksApi } from './googleBooks.api';
+import getMoreBooksReducer from './getMoreBooksSlice';
 
 export const store = configureStore({
 	reducer: {
-		searchBooks: searchBooksReducer,
-		getMoreBooks: moreBooksReducer,
+		[googleBooksApi.reducerPath]: googleBooksApi.reducer,
+
+		getMoreBooks: getMoreBooksReducer,
 	},
+	middleware: getDefaultMiddleware =>
+		getDefaultMiddleware().concat(googleBooksApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

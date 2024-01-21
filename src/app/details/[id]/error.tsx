@@ -5,11 +5,11 @@ import ErrorComponent from '@/app/components/ErrorComponent';
 
 import styles from './styles.module.scss';
 
-const ErrorWrapper = ({ error }: { error: Error }) => {
+const ErrorWrapper = () => {
 	return (
 		<Container>
 			<div className={styles.errorWrapper}>
-				<ErrorComponent error={error.message} />
+				<ErrorComponent error={'Not found details'} />
 			</div>
 		</Container>
 	);

@@ -3,7 +3,7 @@ import { SelectChangeEvent } from '@mui/material';
 import { Option, Select, selectClasses } from '@mui/joy';
 import { KeyboardArrowDown } from '@mui/icons-material';
 
-import { ISelectOptions } from '@/app/types';
+import { ISelectOptions } from '@/app/interfaces/searchBooksDataInterfaces';
 
 import styles from './styles.module.scss';
 

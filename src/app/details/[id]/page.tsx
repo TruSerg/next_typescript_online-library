@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import Image from 'next/image';
 
 import api from '@/app/http';
@@ -7,18 +8,20 @@ import { API_KEY } from '@/app/const';
 
 import Heading from '@/app/components/Heading';
 import Container from '@/app/components/Container';
+import DateComponent from '@/app/components/DateComponent';
 
 import NoImage from '../../static/img/no-image.jpg';
 
 import styles from './styles.module.scss';
-import Link from 'next/link';
-import DateComponent from '@/app/components/DateComponent';
+import { errorMonitor } from 'events';
 
 export const getBookDetails = async (id: string) => {
 	try {
 		const response = await api.get(`${id}?key=${API_KEY}`);
 
 		const data = response.data;
+
+		console.log(data);
 
 		return data;
 	} catch (err) {
@@ -47,8 +50,6 @@ export const generateMetadata = async ({
 const Details: FC<DetailsProps> = async ({ params: { id } }) => {
 	const book = await getBookDetails(id);
 
-	console.log(book);
-
 	const { volumeInfo, accessInfo } = book;
 
 	const authorsList: string[] = volumeInfo.authors;
@@ -61,7 +62,7 @@ const Details: FC<DetailsProps> = async ({ params: { id } }) => {
 	const publishedDate = volumeInfo.publishedDate;
 	const version = volumeInfo.contentVersion;
 	const language = volumeInfo.language;
-	const pageCount = volumeInfo.pageCount;
+	const pageCount = volumeInfo?.pageCount;
 
 	return (
 		<div className={styles.main}>
@@ -79,7 +80,6 @@ const Details: FC<DetailsProps> = async ({ params: { id } }) => {
 								NoImage
 							}
 							sizes='100vw'
-							layout='responsive'
 							width={400}
 							height={400}
 							alt='book image'
@@ -105,12 +105,14 @@ const Details: FC<DetailsProps> = async ({ params: { id } }) => {
 							))}
 						</div>
 
-						<span
-							className={styles.mainFlexRightVersion}
-						>{`v.${version} - ${language} - ${pageCount} pages`}</span>
+						<span className={styles.mainFlexRightVersion}>
+							{`v.${version} - ${language}`}
+							{pageCount && ` - ${pageCount} pages`}
+						</span>
 
 						<div className={styles.mainFlexRightDescription}>
-							{volumeInfo.description || 'No description available!'}
+							{volumeInfo.description?.replace(/<\/?[^>]+>/g, '') ||
+								'No description available!'}
 						</div>
 						<Link
 							className={styles.mainFlexRightLink}

@@ -1,5 +1,5 @@
-export interface IBooksResponse {
-	items: IBook[];
+export interface IBooksResponse<T> {
+	items: T[];
 	kind: string;
 	totalItems: number;
 }
@@ -70,10 +70,10 @@ export interface IBook {
 
 export interface ISearchBooks {
 	searchBooksValue: string;
-	category: string;
+	category?: string;
 	startIndex: number;
 	maxResultsLimit: number;
-	sort: string;
+	sort?: string;
 }
 
 export interface ISelectOptions {

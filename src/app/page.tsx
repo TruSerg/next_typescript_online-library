@@ -1,9 +1,19 @@
 'use client';
 
-import { FC, FormEvent, useCallback, useEffect, useState } from 'react';
+import { FC, FormEvent, useEffect, useState } from 'react';
 import { SearchOutlined } from '@mui/icons-material';
 
-import { searchBooks } from './store/searchBooksSlice';
+import {
+	clearMoreBooksList,
+	getMoreBooks,
+	getMoreBooksSearchValue,
+	getSearchedBooksQuantity,
+	increaseStartIndex,
+} from './store/getMoreBooksSlice';
+import {
+	useLazyGetMoreSearchedBooksQuery,
+	useLazySearchBooksQuery,
+} from './store/googleBooks.api';
 
 import { useForm, useSelect } from './hooks';
 import { useAppDispatch, useAppSelector } from './hooks/useStoreHooks';
@@ -21,38 +31,24 @@ import BackToTopButton from './components/Buttons/BackToTopButton';
 import NoBooksComponent from './components/NoBooksComponent';
 import ErrorComponent from './components/ErrorComponent';
 
-import { bookCategories, booksSort } from './mock';
+import { getRequestErrors } from './utils/getRequestErrors';
 
-import {
-	getBooksOfFirstRequest,
-	getMoreBooks,
-	getMoreBooksSearchValue,
-	moreBooksListClearOfNewSearchRequest,
-} from './store/getMoreBooksSlice';
+import { bookCategories, booksSort } from './mock';
 
 import styles from './page.module.scss';
 
 const HomePageLayout: FC = () => {
 	const dispatch = useAppDispatch();
 
-	const [maxLimitResults] = useState<number>(30);
-	const [startIndex, setStartIndex] = useState<number>(0);
-
-	const {
-		booksResponse,
-		booksList,
-		totalBooksSearchedQuantity,
-		SearchBooksError,
-		isSearchBooksError,
-		isSearchBooksLoading,
-	} = useAppSelector(state => state.searchBooks);
+	const [isFirstRequestHappened, setIsFirstRequestHappened] =
+		useState<boolean>(false);
 
 	const {
 		moreBooksList,
 		moreBooksSearchValue,
-		getMoreBooksError,
-		isGetMoreBooksError,
-		isMoreBooksLoading,
+		searchedBooksQuantity,
+		startIndex,
+		maxResultsLimit,
 	} = useAppSelector(state => state.getMoreBooks);
 
 	const { inputValue, handleFormFieldChange, handleFormReset } = useForm('');
@@ -66,82 +62,96 @@ const HomePageLayout: FC = () => {
 
 	const isFormValid = inputValue.toLowerCase().length > 0;
 
-	const handleFormSubmit = useCallback(
-		(e: FormEvent<HTMLFormElement>) => {
-			if (isFormValid) {
-				e.preventDefault();
-
-				dispatch(
-					searchBooks([
-						inputValue,
-						booksCategoryValue,
-						startIndex,
-						maxLimitResults,
-						booksSortValue,
-					])
-				);
-
-				dispatch(getMoreBooksSearchValue(inputValue));
-			}
-
-			handleFormReset();
+	const [
+		fetchBooks,
+		{
+			data: booksSearchedResponse,
+			isLoading: isSearchBooksLoading,
+			isFetching: isSearchBooksFetching,
+			isError: isSearchBooksError,
+			error: SearchBooksError,
 		},
+	] = useLazySearchBooksQuery();
 
-		[
-			dispatch,
-			isFormValid,
-			inputValue,
-			booksCategoryValue,
-			startIndex,
-			maxLimitResults,
-			booksSortValue,
-			handleFormReset,
-		]
-	);
+	const [
+		fetchMoreBooks,
+		{
+			data: gotMoreBooksResponse,
+			isLoading: isGetMoreBooksLoading,
+			isFetching: isMoreBooksFetching,
+			isError: isMoreBooksError,
+			error: moreBooksError,
+		},
+	] = useLazyGetMoreSearchedBooksQuery();
 
-	const handleGetMoreBooks = useCallback(() => {
-		setStartIndex(startIndex + maxLimitResults);
+	const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+		dispatch(clearMoreBooksList());
 
-		dispatch(
-			getMoreBooks([
-				moreBooksSearchValue,
-				booksCategoryValue,
+		if (isFormValid) {
+			e.preventDefault();
+
+			fetchBooks({
+				searchBooksValue: inputValue,
+				category: booksCategoryValue,
 				startIndex,
-				maxLimitResults,
-				booksSortValue,
-			])
-		);
-	}, [
-		dispatch,
-		moreBooksSearchValue,
-		booksCategoryValue,
-		startIndex,
-		maxLimitResults,
-		booksSortValue,
-	]);
+				maxResultsLimit,
+				sort: booksSortValue,
+			});
+
+			dispatch(getMoreBooksSearchValue(inputValue));
+			dispatch(increaseStartIndex());
+			setIsFirstRequestHappened(true);
+		}
+
+		handleFormReset();
+	};
+
+	const booksList = booksSearchedResponse?.items;
+	const gotMoreBooksList = gotMoreBooksResponse?.items;
+	const totalBooksSearchedQuantity = booksSearchedResponse?.totalItems;
+	const isThereMoreBooksList = moreBooksList.length > 0;
+	const isTotalQuantityBooksShow =
+		searchedBooksQuantity > 0 && moreBooksList.length > 0;
+	const isGetMoreBooksButtonShow =
+		moreBooksList.length > 0 && startIndex <= searchedBooksQuantity;
+
+	const searchRequestBooksError = getRequestErrors(SearchBooksError);
+	const searchRequestMoreBooksError = getRequestErrors(moreBooksError);
+
+	const handleGetMoreBooks = () => {
+		setIsFirstRequestHappened(false);
+
+		fetchMoreBooks({
+			searchBooksValue: moreBooksSearchValue,
+			startIndex,
+			maxResultsLimit,
+		});
+
+		dispatch(increaseStartIndex());
+	};
 
 	useEffect(() => {
-		dispatch(getBooksOfFirstRequest(booksList));
-		setStartIndex(startIndex + maxLimitResults);
+		dispatch(getMoreBooks(booksList));
 	}, [dispatch, booksList]);
 
 	useEffect(() => {
-		dispatch(moreBooksListClearOfNewSearchRequest());
-		setStartIndex(0);
-	}, [dispatch, inputValue]);
+		dispatch(getMoreBooks(gotMoreBooksList));
+	}, [dispatch, gotMoreBooksList]);
 
-	const isTotalQuantityBooksShow =
-		totalBooksSearchedQuantity > 0 && moreBooksList?.length > 0;
+	useEffect(() => {
+		if (isFirstRequestHappened) {
+			dispatch(getSearchedBooksQuantity(totalBooksSearchedQuantity));
+		}
+	}, [dispatch, isFirstRequestHappened, totalBooksSearchedQuantity]);
 
-	const isGetMoreBooksButtonShow =
-		moreBooksList?.length > 0 &&
-		startIndex <= totalBooksSearchedQuantity &&
-		startIndex > 0;
-
-	const isThereMoreBooksList = moreBooksList?.length > 0;
+	console.log(startIndex);
+	console.log('list', booksList);
 
 	return (
 		<main className={styles.main}>
+			{/* {isFirstRequestHappened && booksList === undefined ? (
+				<ErrorComponent error={'Not found anything'} />
+			) : null} */}
 			<div className={styles.mainTop}>
 				<Container>
 					<div className={styles.mainTopForm}>
@@ -198,12 +208,12 @@ const HomePageLayout: FC = () => {
 			</div>
 			<Container>
 				<div className={styles.mainBooksBox}>
-					{isSearchBooksLoading ? (
+					{isSearchBooksLoading || isSearchBooksFetching ? (
 						<Loader />
 					) : (
 						<>
 							{isSearchBooksError ? (
-								<ErrorComponent error={SearchBooksError} />
+								<ErrorComponent error={searchRequestBooksError} />
 							) : (
 								<>
 									{isThereMoreBooksList ? (
@@ -212,7 +222,7 @@ const HomePageLayout: FC = () => {
 												<p className={styles.mainBooksBoxCardsAreaTitle}>
 													Found{' '}
 													<span className={styles.mainBooksBoxCardsAreaResults}>
-														{totalBooksSearchedQuantity}
+														{searchedBooksQuantity}
 													</span>{' '}
 													results
 												</p>
@@ -241,14 +251,14 @@ const HomePageLayout: FC = () => {
 
 				{isGetMoreBooksButtonShow && (
 					<div className={styles.mainButtonArea}>
-						{isGetMoreBooksError ? (
-							<ErrorComponent error={getMoreBooksError} />
+						{isMoreBooksError ? (
+							<ErrorComponent error={searchRequestMoreBooksError} />
 						) : (
 							<CustomButton
 								className={styles.mainButtonAreaBtn}
 								handleClick={handleGetMoreBooks}
 							>
-								{isMoreBooksLoading ? (
+								{isGetMoreBooksLoading || isMoreBooksFetching ? (
 									<Loader className={styles.mainLoader} />
 								) : (
 									'Load more...'
