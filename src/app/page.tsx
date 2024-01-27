@@ -114,6 +114,7 @@ const HomePageLayout: FC = () => {
 		searchedBooksQuantity > 0 && moreBooksList.length > 0;
 	const isGetMoreBooksButtonShow =
 		moreBooksList.length > 0 && startIndex <= searchedBooksQuantity;
+	const isNotFoundAnyBooks = isFirstRequestHappened && booksList === undefined;
 
 	const searchRequestBooksError = getRequestErrors(SearchBooksError);
 	const searchRequestMoreBooksError = getRequestErrors(moreBooksError);
@@ -144,14 +145,8 @@ const HomePageLayout: FC = () => {
 		}
 	}, [dispatch, isFirstRequestHappened, totalBooksSearchedQuantity]);
 
-	console.log(startIndex);
-	console.log('list', booksList);
-
 	return (
 		<main className={styles.main}>
-			{/* {isFirstRequestHappened && booksList === undefined ? (
-				<ErrorComponent error={'Not found anything'} />
-			) : null} */}
 			<div className={styles.mainTop}>
 				<Container>
 					<div className={styles.mainTopForm}>
@@ -212,36 +207,44 @@ const HomePageLayout: FC = () => {
 						<Loader />
 					) : (
 						<>
-							{isSearchBooksError ? (
-								<ErrorComponent error={searchRequestBooksError} />
+							{isNotFoundAnyBooks ? (
+								<ErrorComponent error={'Not found anything'} />
 							) : (
 								<>
-									{isThereMoreBooksList ? (
-										<div className={styles.mainBooksBoxCardsArea}>
-											{isTotalQuantityBooksShow && (
-												<p className={styles.mainBooksBoxCardsAreaTitle}>
-													Found{' '}
-													<span className={styles.mainBooksBoxCardsAreaResults}>
-														{searchedBooksQuantity}
-													</span>{' '}
-													results
-												</p>
-											)}
-											<div className={styles.mainBooksBoxCardsAreaFlex}>
-												{moreBooksList?.map(({ id, volumeInfo }) => (
-													<CustomCard
-														key={id}
-														src={volumeInfo.imageLinks?.smallThumbnail}
-														categories={volumeInfo?.categories}
-														authors={volumeInfo?.authors}
-														title={volumeInfo.title}
-														link={`/details/${id}`}
-													/>
-												))}
-											</div>
-										</div>
+									{isSearchBooksError ? (
+										<ErrorComponent error={searchRequestBooksError} />
 									) : (
-										<NoBooksComponent />
+										<>
+											{isThereMoreBooksList ? (
+												<div className={styles.mainBooksBoxCardsArea}>
+													{isTotalQuantityBooksShow && (
+														<p className={styles.mainBooksBoxCardsAreaTitle}>
+															Found{' '}
+															<span
+																className={styles.mainBooksBoxCardsAreaResults}
+															>
+																{searchedBooksQuantity}
+															</span>{' '}
+															results
+														</p>
+													)}
+													<div className={styles.mainBooksBoxCardsAreaFlex}>
+														{moreBooksList?.map(({ id, volumeInfo }) => (
+															<CustomCard
+																key={id}
+																src={volumeInfo.imageLinks?.smallThumbnail}
+																categories={volumeInfo?.categories}
+																authors={volumeInfo?.authors}
+																title={volumeInfo.title}
+																link={`/details/${id}`}
+															/>
+														))}
+													</div>
+												</div>
+											) : (
+												<NoBooksComponent />
+											)}
+										</>
 									)}
 								</>
 							)}

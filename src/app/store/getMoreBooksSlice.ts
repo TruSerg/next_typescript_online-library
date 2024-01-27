@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { uniqBy } from 'lodash';
 
 import { IBook } from '../interfaces/searchBooksDataInterfaces';
 
@@ -24,7 +25,10 @@ const getMoreBooksSlice = createSlice({
 	reducers: {
 		getMoreBooks(state, { payload }) {
 			if (payload) {
-				state.moreBooksList = [...state.moreBooksList, ...payload];
+				state.moreBooksList = uniqBy(
+					[...state.moreBooksList, ...payload],
+					'id'
+				);
 			}
 		},
 		increaseStartIndex(state) {
