@@ -42,6 +42,8 @@ const getMoreBooksSlice = createSlice({
 		},
 		clearMoreBooksList(state) {
 			state.moreBooksList = [];
+		},
+		clearStartIndex(state) {
 			state.startIndex = 0;
 		},
 	},
@@ -53,6 +55,7 @@ export const {
 	getMoreBooksSearchValue,
 	getSearchedBooksQuantity,
 	clearMoreBooksList,
+	clearStartIndex,
 } = getMoreBooksSlice.actions;
 
 export default getMoreBooksSlice.reducer;

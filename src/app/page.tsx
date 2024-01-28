@@ -5,6 +5,7 @@ import { SearchOutlined } from '@mui/icons-material';
 
 import {
 	clearMoreBooksList,
+	clearStartIndex,
 	getMoreBooks,
 	getMoreBooksSearchValue,
 	getSearchedBooksQuantity,
@@ -86,6 +87,7 @@ const HomePageLayout: FC = () => {
 
 	const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
 		dispatch(clearMoreBooksList());
+		dispatch(clearStartIndex());
 
 		if (isFormValid) {
 			e.preventDefault();

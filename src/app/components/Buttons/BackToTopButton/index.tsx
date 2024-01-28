@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import { ArrowCircleUp } from '@mui/icons-material';
+import { IconButton } from '@mui/joy';
 
 import styles from './styles.module.scss';
-import { IconButton } from '@mui/joy';
 
 const BackToTopButton: FC = () => {
 	const [isBackToTopButtonShow, setIsBackToTopButtonShow] = useState(false);
