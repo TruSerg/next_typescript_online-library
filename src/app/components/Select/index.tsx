@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { ChangeEvent, FC, ReactNode } from 'react';
+import { FocusEvent, KeyboardEvent, MouseEvent } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 import { Option, Select, selectClasses } from '@mui/joy';
 import { KeyboardArrowDown } from '@mui/icons-material';
@@ -12,7 +13,14 @@ interface CustomSelectProps {
 	value: string;
 	defaultValue?: string;
 	placeholderValue?: string;
-	handleChange: (e: SelectChangeEvent, newValue: string) => void;
+	handleChange: (
+		e:
+			| MouseEvent<Element, globalThis.MouseEvent>
+			| KeyboardEvent<Element>
+			| FocusEvent<Element, Element>
+			| null,
+		value: string | null
+	) => void;
 }
 
 const CustomSelect: FC<CustomSelectProps> = ({

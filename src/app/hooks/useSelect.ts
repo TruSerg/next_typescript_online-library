@@ -1,19 +1,33 @@
-import { SelectChangeEvent } from '@mui/material';
-import { useState } from 'react';
+import { FocusEvent, KeyboardEvent, MouseEvent, useState } from 'react';
 
 const useSelect = () => {
-	const [booksCategoryValue, setBooksCategoryValue] = useState<string>('all');
-	const [booksSortValue, setBooksSortValue] = useState<string>('relevance');
+	const [booksCategoryValue, setBooksCategoryValue] = useState<string | null>(
+		'all'
+	);
+	const [booksSortValue, setBooksSortValue] = useState<string | null>(
+		'relevance'
+	);
 
 	const handleBooksCategoryChange = (
-		e: SelectChangeEvent,
-		newValue: string
+		e:
+			| MouseEvent<Element, globalThis.MouseEvent>
+			| KeyboardEvent<Element>
+			| FocusEvent<Element, Element>
+			| null,
+		value: string | null
 	) => {
-		setBooksCategoryValue(newValue);
+		setBooksCategoryValue(value);
 	};
 
-	const handleBooksSortChange = (e: SelectChangeEvent, newValue: string) => {
-		setBooksSortValue(newValue);
+	const handleBooksSortChange = (
+		e:
+			| MouseEvent<Element, globalThis.MouseEvent>
+			| KeyboardEvent<Element>
+			| FocusEvent<Element, Element>
+			| null,
+		value: string | null
+	) => {
+		setBooksSortValue(value);
 	};
 
 	return {

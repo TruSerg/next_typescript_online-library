@@ -94,10 +94,10 @@ const HomePageLayout: FC = () => {
 
 			fetchBooks({
 				searchBooksValue: inputValue,
-				category: booksCategoryValue,
+				category: booksCategoryValue as string,
 				startIndex,
 				maxResultsLimit,
-				sort: booksSortValue,
+				sort: booksSortValue as string,
 			});
 
 			dispatch(getMoreBooksSearchValue(inputValue));
@@ -181,7 +181,7 @@ const HomePageLayout: FC = () => {
 									</p>
 									<CustomSelect
 										array={bookCategories}
-										value={booksCategoryValue}
+										value={booksCategoryValue as string}
 										defaultValue='all'
 										handleChange={handleBooksCategoryChange}
 									/>
@@ -193,7 +193,7 @@ const HomePageLayout: FC = () => {
 									</p>
 									<CustomSelect
 										array={booksSort}
-										value={booksSortValue}
+										value={booksSortValue as string}
 										defaultValue='relevance'
 										handleChange={handleBooksSortChange}
 									/>
