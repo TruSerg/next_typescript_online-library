@@ -13,15 +13,12 @@ import DateComponent from '@/app/components/DateComponent';
 import NoImage from '../../static/img/no-image.jpg';
 
 import styles from './styles.module.scss';
-import { errorMonitor } from 'events';
 
-export const getBookDetails = async (id: string) => {
+const getBookDetails = async (id: string) => {
 	try {
 		const response = await api.get(`${id}?key=${API_KEY}`);
 
 		const data = response.data;
-
-		console.log(data);
 
 		return data;
 	} catch (err) {
